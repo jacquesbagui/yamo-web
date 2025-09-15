@@ -66,7 +66,7 @@ export default function FeaturesCarousel() {
       setIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
     };
     if (!isPaused && features.length > visible) {
-      autoplayRef.current = setInterval(play, 4000);
+      autoplayRef.current = setInterval(play, 8000);
     }
     return () => {
       if (autoplayRef.current) {
