@@ -3,6 +3,7 @@ import './globals.css';
 import type { Metadata, Viewport } from 'next';
 import { Suspense } from 'react';
 import { Toaster } from "@/components/ui/sonner"
+import Script from 'next/script'
 
 export const metadata: Metadata = {
   title: 'Yamo - Solution Restaurant Complète | Menu Digital, Commande & Paiement',
@@ -78,6 +79,7 @@ export default function RootLayout({
         <Suspense fallback={<div className="min-h-screen bg-white" />}>
           {children}
           <Toaster />
+          <Script src="/script.js" />
         </Suspense>
       </body>
     </html>
