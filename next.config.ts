@@ -6,7 +6,15 @@ const nextConfig: NextConfig = {
     clientSegmentCache: true,
     nodeMiddleware: true
   },
-    async redirects() {
+   images: {
+    remotePatterns: [
+      new URL('https://avatar.iran.liara.run/public/**'),
+      new URL('https://sundayapp.com/**'),
+      new URL('https://res.cloudinary.com/**'),
+
+    ],
+  },
+  async redirects() {
     return [
       {
         source: '/menu-digital',

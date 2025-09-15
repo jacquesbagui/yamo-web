@@ -4,12 +4,13 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import StartFreeTrialModal from "@/components/modals/StartFreeTrialModal";
 import DemoModal from "@/components/modals/DemoModal";
+//import cover01 from "@/assets/hero/yamo-cover-01.jpg";
+//import cover02 from "@/assets/hero/yamo-cover-02.jpg";
 
-const heroImages = [
-  "https://sundayapp.com/app/uploads/2024/03/Pay-at-table-LanguageFR@2x-min.png",
-  "https://sundayapp.com/app/uploads/2024/03/Order-Pay-Cover-LanguageFR@2x-min.png",
-  "https://sundayapp.com/app/uploads/2024/03/Smart-Terminal-Cover-Langue-FR.png",
-];
+  const heroImages = [
+    "/assets/images/hero/yamo-cover-01.jpg",
+    "/assets/images/hero/yamo-cover-02.jpg"
+  ];
 
 export default function Hero() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -52,7 +53,9 @@ export default function Hero() {
               className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
             >
               <StartFreeTrialModal />
-              <DemoModal />
+              <a href="/demo" className="cursor-pointer rounded-full font-medium bg-primary text-white px-4 py-2 hover:bg-primary-700 transition">
+                Voir une démo
+              </a>
             </motion.div>
           </div>
           <div className="mt-12 lg:mt-0 relative">

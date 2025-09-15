@@ -10,21 +10,24 @@ import Pricing from "@/components/sections/Pricing";
 import CTA from "@/components/sections/CTA";
 import Footer from "@/components/Footer";
 import Benefits from "@/components/sections/Benefits";
+import PlansComparison from "@/components/sections/PlansComparison";
+import FeaturesSection from "@/components/sections/FeaturesSection";
+import { toast } from "sonner";
 
 export default function HomePage() {
-  const [yearly, setYearly] = useState(true);
+  const [yearly, setYearly] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
   return (
     <main className="overflow-hidden">
       <TopBar />
       <Header mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
       <Hero />
       <Features />
+      <FeaturesSection />
       <Benefits />
-      <ProductsTabs />
-      <Testimonials />
       <Pricing yearly={yearly} setYearly={setYearly} />
+      <PlansComparison />
+      <Testimonials />
       <CTA />
       <Footer />
     </main>

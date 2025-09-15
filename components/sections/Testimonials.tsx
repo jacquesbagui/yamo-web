@@ -6,19 +6,19 @@ const testimonials = [
   {
     quote: "Yamo a réduit nos temps d'attente de 30% et augmenté notre chiffre d'affaires.",
     author: "Le Bistrot Parisien",
-    logo: "https://via.placeholder.com/150x50?text=Bistrot+Parisien",
+    logo: "https://avatar.iran.liara.run/public/37",
     role: "Gérant",
   },
   {
     quote: "L'intégration a été fluide et nos clients adorent la simplicité.",
     author: "Café des Arts",
-    logo: "https://via.placeholder.com/150x50?text=Café+des+Arts",
+    logo: "https://avatar.iran.liara.run/public/33",
     role: "Directeur",
   },
   {
     quote: "Un outil indispensable pour notre restaurant étoilé.",
     author: "Le Grand Michelin",
-    logo: "https://via.placeholder.com/150x50?text=Le+Grand+Michelin",
+    logo: "https://avatar.iran.liara.run/public/99",
     role: "Chef",
   },
 ];

@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import Image from 'next/image'
 import DemoModal from "@/components/modals/DemoModal";
 
 export default function Header({
@@ -16,13 +17,20 @@ export default function Header({
         <div className="flex h-20 items-center justify-between">
           <div className="flex items-center gap-3">
             <a href="/">
-              <span className="text-2xl tracking-tight">Yamo</span>
+              <Image
+                src="/assets/images/logo/logo.svg" 
+                alt="Yamo Logo"
+                className="h-8 w-auto"
+
+                width={32}
+                height={32}
+              />
             </a>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-8 text-md font-medium">
-            {['Produits', 'Solutions', 'Tarifs', 'Ressources', 'Demo'].map((item) => (
+            {['Produits', 'Bénéfices', 'Tarifs'].map((item) => (
               <a
                 key={item}
                 href={`/#${item.toLowerCase()}`}
@@ -35,7 +43,9 @@ export default function Header({
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-3">
-            <DemoModal />
+              <a href="/demo" className="cursor-pointer rounded-full font-bold border border-gray-300 bg-white text-black px-5 py-2 hover:bg-primary-700 transition">
+                Voir une démo
+              </a>
           </div>
 
           {/* Mobile menu button */}

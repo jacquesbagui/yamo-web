@@ -1,83 +1,171 @@
 "use client";
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
-import { ArrowUpRight, Clock, CreditCard, Users, BarChart } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import {
+  TrendingUp,
+  Clock,
+  CreditCard,
+  Users,
+  BarChart3,
+  Shield
+} from "lucide-react";
 
-const benefits = [
+const BRAND = {
+  orange: "#F0AB3C",
+  red: "#EB622B",
+  navy: "#121827"
+};
+
+const MAIN_BENEFITS = [
   {
-    icon: <ArrowUpRight className="h-8 w-8 text-green-600" />,
+    icon: <TrendingUp className="h-6 w-6" />,
     title: "Augmentez votre chiffre d'affaires",
-    description: "Boostez vos ventes avec des commandes plus rapides et des paniers moyens plus élevés.",
-    stat: "+30%",
+    description:
+      "Boostez vos ventes avec des commandes plus rapides et un panier moyen plus élevé.",
+    badge: "Rentabilité"
   },
   {
-    icon: <Clock className="h-8 w-8 text-blue-600" />,
-    title: "Gagnez du temps",
-    description: "Réduisez les temps d'attente et optimisez la rotation des tables.",
-    stat: "-40%",
+    icon: <Clock className="h-6 w-6" />,
+    title: "Réduisez les temps d'attente",
+    description:
+      "Optimisez votre service avec la commande autonome et accélérez la rotation.",
+    badge: "Efficacité"
   },
   {
-    icon: <CreditCard className="h-8 w-8 text-purple-600" />,
-    title: "Paiements simplifiés",
-    description: "Offrez une expérience de paiement fluide et sécurisée à vos clients.",
-    stat: "100% sécurisé",
+    icon: <CreditCard className="h-6 w-6" />,
+    title: "Paiements Mobile Money",
+    description:
+      "Solution adaptée au marché africain avec Orange Money, MTN MoMo et Wave.",
+    badge: "Afrique"
   },
   {
-    icon: <Users className="h-8 w-8 text-orange-600" />,
+    icon: <Users className="h-6 w-6" />,
     title: "Fidélisez vos clients",
-    description: "Créez des programmes de fidélité et des offres personnalisées.",
-    stat: "+25% de retour",
+    description:
+      "Programme de fidélité avec points et recommandations personnalisées.",
+    badge: "Fidélisation"
   },
   {
-    icon: <BarChart className="h-8 w-8 text-red-600" />,
-    title: "Analysez vos performances",
-    description: "Accédez à des rapports détaillés pour prendre des décisions éclairées.",
-    stat: "Données en temps réel",
+    icon: <BarChart3 className="h-6 w-6" />,
+    title: "Analytics en temps réel",
+    description:
+      "Dashboard complet avec métriques de vente et insights clients.",
+    badge: "Analytics"
   },
+  {
+    icon: <Shield className="h-6 w-6" />,
+    title: "Sécurité maximale",
+    description:
+      "Données sécurisées avec encryption et conformité aux standards bancaires.",
+    badge: "Sécurité"
+  }
 ];
 
-export default function Benefits() {
+const STATS = [
+  { value: "500+", label: "Restaurants" },
+  { value: "50K+", label: "Commandes" },
+  { value: "8", label: "Pays" },
+  { value: "99.9%", label: "Uptime" }
+];
+
+export default function RealBenefitsSection() {
   return (
-    <section className="py-16 bg-gray-50">
+    <section id="bénéfices" className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl mb-4">
-            Les bénéfices clés pour votre restaurant
+          <Badge
+            className="mb-4 px-4 py-1 rounded-full text-white text-sm font-medium"
+            style={{ backgroundColor: BRAND.red }}
+          >
+            Solution Complète
+          </Badge>
+
+          <h2
+            className="text-4xl sm:text-5xl font-bold mb-4"
+            style={{ color: BRAND.navy }}
+          >
+            Transformez votre{" "}
+            <span style={{ color: BRAND.red }}>restaurant</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Découvrez comment Yamo transforme votre établissement en une expérience moderne et rentable.
+
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            Une solution SaaS élégante et performante, adaptée aux restaurateurs
+            africains.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {benefits.map((benefit, index) => (
+        {/* Benefits */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          {MAIN_BENEFITS.map((b, i) => (
             <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
+              key={b.title}
+              initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ delay: i * 0.06 }}
             >
-              <Card className="p-6 hover:shadow-lg transition-shadow h-full">
-                <div className="flex flex-col items-center text-center h-full">
-                  <div className="flex items-center justify-center h-16 w-16 rounded-full bg-gray-100 mb-4">
-                    {benefit.icon}
+              <Card className="p-6 h-full border border-gray-200 bg-white hover:shadow-lg transition">
+                <div className="flex items-start gap-4 mb-4">
+                  {/* Icon cercle accent */}
+                  <div
+                    className="flex items-center justify-center rounded-full p-3 text-white shadow"
+                    style={{ backgroundColor: BRAND.navy }}
+                  >
+                    {b.icon}
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{benefit.title}</h3>
-                  <p className="text-gray-600 mb-4 flex-grow">{benefit.description}</p>
-                  <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-full text-sm font-medium">
-                    {benefit.stat}
+                  <div className="flex-1">
+                    <h3
+                      className="text-lg font-semibold mb-1"
+                      style={{ color: BRAND.navy }}
+                    >
+                      {b.title}
+                    </h3>
+                    <p className="text-sm text-gray-600">{b.description}</p>
                   </div>
                 </div>
+
               </Card>
             </motion.div>
           ))}
         </div>
+
+        {/* Stats */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+        >
+          <Card
+            className="p-8 text-center"
+            style={{ backgroundColor: BRAND.navy, color: "white" }}
+          >
+            <h3 className="text-xl font-semibold mb-8">
+              La confiance des restaurateurs
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              {STATS.map((s, idx) => (
+                <div key={idx}>
+                  <div
+                    className="text-3xl font-bold mb-1"
+                    style={{ color: BRAND.red }}
+                  >
+                    {s.value}
+                  </div>
+                  <div className="text-gray-200 text-sm">{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </motion.div>
       </div>
     </section>
   );

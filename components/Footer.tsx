@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from 'next/image'
 
 const footerLinks = {
   produit: [
@@ -31,9 +32,17 @@ export default function Footer() {
           {/* Description de l'entreprise */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-4">
-              <span className="text-2xl font-light tracking-tight">Yamo</span>
+              <a href="/">
+                <Image
+                  src="/assets/images/logo/logo.svg"
+                  alt="Yamo Logo"
+                  className="h-8 w-auto"
+                  width={32}
+                  height={32}
+                />
+              </a>
             </div>
-            <p className="text-gray-600 font-light max-w-md">
+            <p className="text-gray-600 max-w-md">
               La suite complète pour digitaliser et moderniser votre restaurant.
             </p>
           </div>
@@ -44,7 +53,7 @@ export default function Footer() {
               <h4 className="font-medium text-gray-900 mb-4 capitalize">
                 {category}
               </h4>
-              <ul className="space-y-2 text-gray-600 font-light">
+              <ul className="space-y-2 text-gray-600">
                 {links.map((link) => (
                   <li key={link.name}>
                     <Link
@@ -69,7 +78,7 @@ export default function Footer() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="text-gray-500 hover:text-gray-900 text-sm font-light transition-colors"
+                  className="text-gray-500 hover:text-gray-900 text-sm transition-colors"
                 >
                   {link.name}
                 </Link>
@@ -77,7 +86,7 @@ export default function Footer() {
             </div>
 
             {/* Copyright */}
-            <p className="text-gray-500 font-light text-sm text-center md:text-right">
+            <p className="text-gray-500 text-sm text-center md:text-right">
               © 2025 Yamo. Tous droits réservés.
             </p>
           </div>

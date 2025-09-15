@@ -1,169 +1,308 @@
 "use client";
 import { motion } from "framer-motion";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { ChefHat, Smartphone, Rocket } from "lucide-react";
-import AdvancedProductCard from "../AdvancedProductCard";
+import { ChefHat, Smartphone, Rocket, Zap } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import StartFreeTrialModal from "@/components/modals/StartFreeTrialModal";
+import ContactSalesModal from "@/components/modals/ContactSalesModal";
+
+// Données simplifiées avec charte de couleurs harmonisée
+const MODULES = {
+  menu: {
+    title: "Menu Digital",
+    subtitle: "QR codes et gestion temps réel",
+    description: "Transformez votre carte papier en expérience digitale avec QR codes personnalisés par table.",
+    price: "Inclus dans tous les plans",
+    color: "orange-500",
+    gradient: "from-orange-400 to-red-500",
+    features: [
+      "QR codes personnalisés par table",
+      "Gestion menu avec photos HD",
+      "Mise à jour temps réel des prix",
+      "Filtres allergènes et préférences"
+    ],
+    stats: [
+      { value: "3min", label: "Setup", color: "text-orange-500" },
+      { value: "+25%", label: "Consultations", color: "text-red-500" },
+      { value: "100%", label: "Temps réel", color: "text-blue-900" }
+    ],
+    integrations: [
+      { name: "QR Codes", color: "bg-orange-500" },
+      { name: "PWA", color: "bg-red-500" },
+      { name: "Offline", color: "bg-blue-900" }
+    ]
+  },
+  
+  order: {
+    title: "Order & Pay",
+    subtitle: "Commande et Mobile Money",
+    description: "Commande autonome avec paiements Mobile Money adaptés au marché africain.",
+    price: "À partir de 15 000 FCFA/mois",
+    color: "red-900",
+    gradient: "from-red-900 to-orange-400",
+    features: [
+      "Interface mobile optimisée",
+      "Orange Money, MTN, Wave intégrés",
+      "Partage de facture automatique",
+      "Notifications WhatsApp et SMS"
+    ],
+    stats: [
+      { value: "<3min", label: "Commande", color: "text-blue-900" },
+      { value: "95%", label: "Paiements", color: "text-red-500" },
+      { value: "+40%", label: "Rotation", color: "text-orange-500" }
+    ],
+    integrations: [
+      { name: "Orange Money", color: "bg-orange-500" },
+      { name: "MTN MoMo", color: "bg-red-500" },
+      { name: "Wave", color: "bg-blue-900" }
+    ]
+  },
+  
+  suite: {
+    title: "Suite Complète",
+    subtitle: "Analytics + Multi-locations",
+    description: "Solution tout-en-un avec dashboard analytics et gestion multi-restaurants.",
+    price: "À partir de 35 000 FCFA/mois",
+    color: "red-500",
+    gradient: "from-red-500 to-blue-900",
+    features: [
+      "Dashboard analytics avancé",
+      "App Staff PWA dédiée",
+      "Gestion multi-locations",
+      "API et intégrations POS"
+    ],
+    stats: [
+      { value: "360°", label: "Vue globale", color: "text-red-500" },
+      { value: "99.9%", label: "Uptime", color: "text-blue-900" },
+      { value: "24/7", label: "Support", color: "text-orange-500" }
+    ],
+    integrations: [
+      { name: "WhatsApp", color: "bg-orange-500" },
+      { name: "API REST", color: "bg-red-500" },
+      { name: "Analytics", color: "bg-blue-900" }
+    ]
+  }
+};
 
 export default function ProductsTabs() {
   return (
-    <section id="produits" className="py-12 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
+    <section id="produits" className="py-20 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
+      
+      {/* Décoration background subtile */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-orange-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse" style={{animationDelay: '3s'}}></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-orange-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{animationDelay: '3s'}}></div>
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center space-y-6 max-w-4xl mx-auto mb-20"
+          className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-2 rounded-full shadow-sm">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-            <span className="font-medium">Trois modules, une synergie parfaite</span>
-          </div>
+          <Badge className="bg-gradient-to-r from-orange-400 to-red-500 text-white px-6 py-2 mb-6">
+            <Zap className="w-4 h-4 mr-2" />
+            Solutions modulaires
+          </Badge>
 
-          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-light tracking-tight text-gray-900">
-            Votre parcours de <span className="bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">digitalisation</span>
+          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 mb-6">
+            Votre parcours de <span className="text-orange-500">digitalisation</span>
           </h2>
 
-          <p className="text-xl sm:text-xl font-light text-gray-600 max-w-3xl mx-auto">
-            Commencez par le module qui correspond à vos besoins actuels, puis évoluez vers la solution complète à votre rythme
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Commencez par le menu digital, évoluez vers la solution complète à votre rythme.
           </p>
         </motion.div>
 
         <Tabs defaultValue="menu" className="space-y-12">
+          
+          {/* Navigation */}
           <div className="flex justify-center">
-            <div className="bg-white rounded-2xl p-2 shadow-sm border border-gray-100">
-              <TabsList className="grid grid-cols-3 bg-transparent gap-1 h-auto">
+            <div className="bg-white rounded-2xl p-2 shadow-lg border border-gray-200">
+              <TabsList className="grid grid-cols-3 bg-transparent gap-2 h-auto">
+                
                 <TabsTrigger
                   value="menu"
-                  className="flex flex-col items-center gap-3 p-6 rounded-xl data-[state=active]:bg-gradient-to-br data-[state=active]:from-orange-500 data-[state=active]:to-red-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all min-w-[180px]"
+                  className="flex flex-col items-center gap-2 p-4 rounded-xl data-[state=active]:bg-orange-500 data-[state=active]:text-white transition-all min-w-[160px] hover:bg-gray-50"
                 >
-                  <div className="p-3 rounded-xl bg-orange-100 data-[state=active]:bg-white/20">
-                    <ChefHat className="h-6 w-6 text-orange-600 data-[state=active]:text-white" />
-                  </div>
-                  <div className="text-center">
-                    <div className="font-semibold">Menu Digital</div>
-                    <div className="text-xs opacity-75 mt-1">Étape 1</div>
-                  </div>
+                  <ChefHat className="h-5 w-5" />
+                  <div className="text-sm font-medium">Menu Digital</div>
+                  <div className="text-xs opacity-70">Base essentielle</div>
                 </TabsTrigger>
 
                 <TabsTrigger
                   value="order"
-                  className="flex flex-col items-center gap-3 p-6 rounded-xl data-[state=active]:bg-gradient-to-br data-[state=active]:from-blue-500 data-[state=active]:to-purple-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all min-w-[180px]"
+                  className="flex flex-col items-center gap-2 p-4 rounded-xl data-[state=active]:bg-yellow-500 data-[state=active]:text-white transition-all min-w-[160px] hover:bg-gray-50"
                 >
-                  <div className="p-3 rounded-xl bg-blue-100 data-[state=active]:bg-white/20">
-                    <Smartphone className="h-6 w-6 text-blue-600 data-[state=active]:text-white" />
-                  </div>
-                  <div className="text-center">
-                    <div className="font-semibold">Order & Pay</div>
-                    <div className="text-xs opacity-75 mt-1">Étape 2</div>
-                  </div>
+                  <Smartphone className="h-5 w-5" />
+                  <div className="text-sm font-medium">Order & Pay</div>
+                  <div className="text-xs opacity-70">Commande autonome</div>
                 </TabsTrigger>
 
                 <TabsTrigger
                   value="suite"
-                  className="flex flex-col items-center gap-3 p-6 rounded-xl data-[state=active]:bg-gradient-to-br data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all min-w-[180px]"
+                  className="flex flex-col items-center gap-2 p-4 rounded-xl data-[state=active]:bg-gray-900 data-[state=active]:text-white transition-all min-w-[160px] hover:bg-gray-50"
                 >
-                  <div className="p-3 rounded-xl bg-purple-100 data-[state=active]:bg-white/20">
-                    <Rocket className="h-6 w-6 text-purple-600 data-[state=active]:text-white" />
-                  </div>
-                  <div className="text-center">
-                    <div className="font-semibold">Suite Complète</div>
-                    <div className="text-xs opacity-75 mt-1">Solution totale</div>
-                  </div>
+                  <Rocket className="h-5 w-5" />
+                  <div className="text-sm font-medium">Suite Complète</div>
+                  <div className="text-xs opacity-70">Solution totale</div>
                 </TabsTrigger>
+
               </TabsList>
             </div>
           </div>
 
+          {/* Contenu des tabs */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
           >
-            <TabsContent value="menu">
-              <AdvancedProductCard
-                gradient="from-orange-500 to-red-500"
-                title="Menu Digital Intelligent"
-                subtitle="Transformez votre carte en expérience interactive"
-                description="Remplacez vos menus papier par une solution digitale moderne qui s'adapte en temps réel à votre offre et captive vos clients."
-                features={[
-                  { title: "QR Codes personnalisés", desc: "Un code unique par table, avec tracking des consultations" },
-                  { title: "Photos haute définition", desc: "Images optimisées qui donnent envie, avec zoom et galerie" },
-                  { title: "Gestion allergènes", desc: "Filtres automatiques et alertes pour sécuriser vos clients" },
-                  { title: "Mises à jour instantanées", desc: "Modifiez prix et disponibilité en temps réel" },
-                  { title: "Recommandations IA", desc: "Suggestions personnalisées basées sur les préférences" },
-                  { title: "Support multilingue", desc: "Menu automatiquement traduit selon la langue du client" },
-                ]}
-                stats={[
-                  { value: "65%", label: "Réduction temps de consultation" },
-                  { value: "28%", label: "Augmentation panier moyen" },
-                  { value: "2min", label: "Temps de mise en place" },
-                ]}
-                price="À partir de 89€/mois"
-                demo="Voir un menu démo"
-              />
-            </TabsContent>
+            {Object.entries(MODULES).map(([key, module]) => (
+              <TabsContent key={key} value={key}>
+                <Card className="p-8 lg:p-12 shadow-xl border-0 bg-white/95 backdrop-blur-sm">
+                  <div className="grid lg:grid-cols-2 gap-12 items-center">
+                    
+                    {/* Contenu principal gauche */}
+                    <div className="space-y-8">
+                      <div>
+                        <Badge className={`mb-4 px-4 py-2 bg-${module.color}/10 text-${module.color} border border-${module.color}/20`}>
+                          <Zap className="w-4 h-4 mr-2" />
+                          {module.price}
+                        </Badge>
+                        
+                        <h3 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                          {module.title}
+                        </h3>
+                        <p className="text-lg text-gray-600 mb-6">
+                          {module.subtitle}
+                        </p>
+                        <p className="text-gray-700 leading-relaxed">
+                          {module.description}
+                        </p>
+                      </div>
 
-            <TabsContent value="order">
-              <AdvancedProductCard
-                gradient="from-blue-500 to-purple-500"
-                title="Order & Pay - Commande Autonome"
-                subtitle="L'autonomie totale pour vos clients"
-                description="Permettez à vos clients de commander et payer directement depuis leur smartphone."
-                features={[
-                  { title: "Commande directe QR", desc: "Scan → Commande → Paiement en 3 clics" },
-                  { title: "Panier intelligent", desc: "Suggestions automatiques d'accompagnements et desserts" },
-                  { title: "Split automatique", desc: "Division de l'addition entre convives en un clic" },
-                  { title: "Paiements sécurisés", desc: "Cartes, PayPal, Apple Pay - toutes méthodes acceptées" },
-                  { title: "Notifications temps réel", desc: "Client informé à chaque étape de sa commande" },
-                  { title: "Historique détaillé", desc: "Favoris et récommandes facilitées pour fidéliser" },
-                ]}
-                stats={[
-                  { value: "52%", label: "Réduction temps de service" },
-                  { value: "4.8/5", label: "Satisfaction client" },
-                  { value: "+31%", label: "Rotation des tables" },
-                ]}
-                price="À partir de 149€/mois"
-                demo="Tester une commande"
-                popular
-              />
-            </TabsContent>
+                      {/* Fonctionnalités */}
+                      <div className="space-y-4">
+                        {module.features.map((feature, idx) => (
+                          <div key={idx} className="flex items-center gap-3">
+                            <div className={`w-2 h-2 rounded-full bg-${module.color}`}></div>
+                            <span className="text-gray-700">{feature}</span>
+                          </div>
+                        ))}
+                      </div>
 
-            <TabsContent value="suite">
-              <AdvancedProductCard
-                gradient="from-purple-500 to-pink-500"
-                title="Suite Complète Restaurant"
-                subtitle="L'écosystème intégral de digitalisation"
-                description="La solution tout-en-un qui révolutionne l'expérience client et optimise la gestion de votre établissement."
-                features={[
-                  { title: "Intégration Menu + Order", desc: "Synergie parfaite entre tous les modules" },
-                  { title: "Dashboard Analytics", desc: "Insights détaillés sur ventes, clients et performances" },
-                  { title: "Gestion staff complète", desc: "Rôles, permissions et suivi de performance équipe" },
-                  { title: "Intégrations POS", desc: "Compatible avec tous les systèmes de caisse existants" },
-                  { title: "Programme fidélité", desc: "Points, récompenses et campagnes marketing automatisées" },
-                  { title: "API & Webhooks", desc: "Connectivité totale avec vos outils métier" },
-                  { title: "Support prioritaire 24/7", desc: "Équipe dédiée et formation continue incluse" },
-                  { title: "Onboarding premium", desc: "Accompagnement personnalisé pour optimiser l'adoption" },
-                ]}
-                stats={[
-                  { value: "340%", label: "ROI moyen sur 12 mois" },
-                  { value: "48h", label: "Déploiement complet" },
-                  { value: "99.9%", label: "Disponibilité garantie" },
-                ]}
-                price="Solution sur mesure"
-                demo="Planifier une démo"
-                enterprise
-              />
-            </TabsContent>
+                      {/* Statistiques */}
+                      <div className="flex gap-8">
+                        {module.stats.map((stat, idx) => (
+                          <div key={idx} className="text-center">
+                            <div className={`text-2xl font-bold ${stat.color}`}>
+                              {stat.value}
+                            </div>
+                            <div className="text-sm text-gray-600">{stat.label}</div>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Boutons d'action */}
+                      <div className="flex gap-4">
+                        <Button 
+                          size="lg"
+                          className={`bg-gradient-to-r ${module.gradient} hover:opacity-90 text-white`}
+                        >
+                          Voir la démo
+                        </Button>
+                        <Button 
+                          size="lg" 
+                          variant="outline"
+                          className="border-gray-300 hover:bg-gray-50"
+                        >
+                          En savoir plus
+                        </Button>
+                      </div>
+                    </div>
+
+                    {/* Intégrations droite */}
+                    <div className="space-y-6">
+                      <Card className="p-6 bg-gray-50 border-0">
+                        <h4 className="font-semibold text-gray-900 mb-4">
+                          Intégrations incluses
+                        </h4>
+                        <div className="grid grid-cols-3 gap-3">
+                          {module.integrations.map((integration, idx) => (
+                            <div key={idx} className="text-center p-3 bg-white rounded-lg shadow-sm border border-gray-100">
+                              <div className={`w-6 h-6 ${integration.color} rounded-full mx-auto mb-2`}></div>
+                              <div className="text-xs text-gray-600">{integration.name}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </Card>
+
+                      {/* Bénéfices clés */}
+                      <Card className="p-6 bg-gradient-to-br from-gray-50 to-white border-0">
+                        <h4 className="font-semibold text-gray-900 mb-4">
+                          Pourquoi choisir {module.title} ?
+                        </h4>
+                        <div className="space-y-3 text-sm text-gray-700">
+                          {key === 'menu' && (
+                            <>
+                              <div>• Configuration en 3 minutes seulement</div>
+                              <div>• Compatible tous smartphones</div>
+                              <div>• Mode offline automatique</div>
+                            </>
+                          )}
+                          {key === 'order' && (
+                            <>
+                              <div>• Paiements 95% de réussite</div>
+                              <div>• Interface adaptée Afrique</div>
+                              <div>• Support connectivité faible</div>
+                            </>
+                          )}
+                          {key === 'suite' && (
+                            <>
+                              <div>• Insights temps réel avec IA</div>
+                              <div>• Gestion centralisée multi-sites</div>
+                              <div>• Support dédié 24/7</div>
+                            </>
+                          )}
+                        </div>
+                      </Card>
+                    </div>
+                  </div>
+                </Card>
+              </TabsContent>
+            ))}
           </motion.div>
         </Tabs>
+
+        {/* CTA Final */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mt-16"
+        >
+          <Card className="p-8 bg-gradient-to-r from-blue-900 to-gray-800 text-white border-0">
+            <h3 className="text-2xl font-bold mb-4">
+              Prêt à digitaliser votre restaurant ?
+            </h3>
+            <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
+              Plus de 500 restaurateurs africains nous font déjà confiance.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <StartFreeTrialModal />
+              <Button size="lg" variant="outline" className="border-gray-400 text-white hover:bg-white/10">
+                Planifier une démo
+              </Button>
+            </div>
+          </Card>
+        </motion.div>
       </div>
     </section>
   );

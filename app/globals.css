@@ -273,3 +273,14 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Styles pour les toasts (correction du texte blanc) */
+@layer utilities {
+  .toast {
+    @apply bg-card text-card-foreground;
+  }
+
+  .toast-description {
+    @apply text-muted-foreground;
+  }
+}

@@ -1,3 +1,4 @@
+// components/modals/DemoModal.tsx
 "use client";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -12,6 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { toast } from "sonner"
 
 export default function DemoModal() {
   const [formData, setFormData] = useState({
@@ -20,16 +22,57 @@ export default function DemoModal() {
     date: "",
     time: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const resetForm = () => {
+    setFormData({
+      name: "",
+      email: "",
+      date: "",
+      time: "",
+    });
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert(`Démonstration planifiée pour ${formData.date} à ${formData.time}.`);
+    setIsLoading(true);
+
+    try {
+      const res = await fetch("/api/pipedrive", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          note: `Demande de démo planifiée pour ${formData.date} à ${formData.time}.`,
+          value: 0, // Pas de valeur monétaire pour une démo
+        }),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        toast("Succès !",{
+          description: `Votre démo a été planifiée pour ${formData.date} à ${formData.time}.`,
+        });
+        setOpen(false);
+        resetForm();
+      } else {
+        throw new Error(data.error || "Échec de la création du lead.");
+      }
+    } catch (err) {
+      toast.error("Erreur", {
+        description: "Une erreur est survenue. Veuillez réessayer."
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="rounded-full border-gray-300 hover:bg-gray-50">
+        <Button variant="outline" className="cursor-pointer rounded-full font-bold border-gray-300 hover:bg-gray-50">
           Voir une démo
         </Button>
       </DialogTrigger>
@@ -47,7 +90,7 @@ export default function DemoModal() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="grid gap-2">
                 <Label htmlFor="demo-name" className="font-medium">
-                  Nom
+                  Nom *
                 </Label>
                 <Input
                   id="demo-name"
@@ -59,7 +102,7 @@ export default function DemoModal() {
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="demo-email" className="font-medium">
-                  Email
+                  Email *
                 </Label>
                 <Input
                   id="demo-email"
@@ -74,7 +117,7 @@ export default function DemoModal() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="grid gap-2">
                 <Label htmlFor="demo-date" className="font-medium">
-                  Date
+                  Date *
                 </Label>
                 <Input
                   id="demo-date"
@@ -86,7 +129,7 @@ export default function DemoModal() {
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="demo-time" className="font-medium">
-                  Heure
+                  Heure *
                 </Label>
                 <Input
                   id="demo-time"
@@ -99,8 +142,8 @@ export default function DemoModal() {
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit" className="w-full bg-gray-900 hover:bg-gray-800 text-white">
-              Confirmer la démo
+            <Button type="submit" disabled={isLoading} className="w-full bg-gray-900 hover:bg-gray-800 text-white">
+              {isLoading ? "Envoi en cours..." : "Confirmer la démo"}
             </Button>
           </DialogFooter>
         </form>

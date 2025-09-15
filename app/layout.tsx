@@ -2,6 +2,7 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
 import { Suspense } from 'react';
+import { Toaster } from "@/components/ui/sonner"
 
 export const metadata: Metadata = {
   title: 'Yamo - Solution Restaurant Complète | Menu Digital, Commande & Paiement',
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Yamo - Solution Restaurant Complète',
     description: 'Menu digital, commandes autonomes, paiements intégrés. +2000 restaurants nous font confiance.',
-    url: 'https://yamo.app',
+    url: 'https://yamapp.io',
     siteName: 'Yamo',
     images: [
       {
@@ -72,11 +73,11 @@ export default function RootLayout({
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body className="min-h-screen bg-white antialiased">
         <Suspense fallback={<div className="min-h-screen bg-white" />}>
           {children}
+          <Toaster />
         </Suspense>
       </body>
     </html>

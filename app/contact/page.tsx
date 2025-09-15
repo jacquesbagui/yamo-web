@@ -1,14 +1,15 @@
 "use client";
 import { motion } from "framer-motion";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Footer from "@/components/TopBar";
 import TopBar from "@/components/TopBar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Phone, MapPin, Clock } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, Check } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -18,10 +19,64 @@ export default function Contact() {
     restaurant: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert(`Merci, ${formData.name}! Nous vous contacterons sous 24h.`);
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+
+    try {
+      const response = await fetch("/api/pipedrive", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          company: formData.restaurant,
+          note: `Demande de contact: ${formData.message}`,
+          value: 0, // Pas de valeur monétaire pour un simple contact
+          currency: "EUR",
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSubmitStatus("success");
+        toast.success("Message envoyé avec succès!", {
+          description: "Nous vous contacterons sous 24h.",
+        });
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          restaurant: "",
+          message: "",
+        });
+      } else {
+        throw new Error(data.error || "Erreur lors de l'envoi");
+      }
+    } catch (error) {
+      setSubmitStatus("error");
+      toast.error("Erreur", {
+        description: "Une erreur est survenue. Veuillez réessayer.",
+      });
+      console.error("Error submitting form:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const formatPhoneNumber = (value: string) => {
+    // Formatage pour les numéros français (ajustez selon vos besoins)
+    const cleaned = value.replace(/\D/g, '');
+    const match = cleaned.match(/^(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/);
+    return match ? `${match[1]} ${match[2]} ${match[3]} ${match[4]} ${match[5]}` : cleaned;
   };
 
   return (
@@ -62,22 +117,45 @@ export default function Contact() {
         <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="lg:grid lg:grid-cols-2 lg:gap-16">
+              {/* Formulaire */}
               <div className="mb-12 lg:mb-0">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">Envoyez-nous un message</h2>
+
+                {submitStatus === "success" && (
+                  <div className="mb-6 p-4 bg-green-50 rounded-lg border border-green-200 flex items-center gap-3">
+                    <div className="p-2 bg-green-100 rounded-full text-green-600">
+                      <Check className="h-5 w-5" />
+                    </div>
+                    <div className="text-green-800">
+                      <p className="font-medium">Message envoyé avec succès!</p>
+                      <p className="text-sm">Nous vous contacterons sous 24h.</p>
+                    </div>
+                  </div>
+                )}
+
+                {submitStatus === "error" && (
+                  <div className="mb-6 p-4 bg-red-50 rounded-lg border border-red-200">
+                    <p className="text-red-800 font-medium">
+                      Une erreur est survenue. Veuillez réessayer.
+                    </p>
+                  </div>
+                )}
+
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                     <div className="space-y-2">
-                      <Label htmlFor="name" className="font-medium">Nom complet</Label>
+                      <Label htmlFor="name" className="font-medium">Nom complet *</Label>
                       <Input
                         id="name"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         placeholder="Ex: Jean Dupont"
                         required
+                        className="focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="email" className="font-medium">Email</Label>
+                      <Label htmlFor="email" className="font-medium">Email *</Label>
                       <Input
                         id="email"
                         type="email"
@@ -85,6 +163,7 @@ export default function Contact() {
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         placeholder="exemple@restaurant.fr"
                         required
+                        className="focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                   </div>
@@ -97,10 +176,11 @@ export default function Contact() {
                         type="tel"
                         value={formData.phone}
                         onChange={(e) => {
-                          const formatted = e.target.value.replace(/(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/, "$1 $2 $3 $4 $5");
+                          const formatted = formatPhoneNumber(e.target.value);
                           setFormData({ ...formData, phone: formatted });
                         }}
                         placeholder="Ex: 06 12 34 56 78"
+                        className="focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                     <div className="space-y-2">
@@ -110,28 +190,41 @@ export default function Contact() {
                         value={formData.restaurant}
                         onChange={(e) => setFormData({ ...formData, restaurant: e.target.value })}
                         placeholder="Ex: Le Bistrot Parisien"
+                        className="focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="message" className="font-medium">Message</Label>
+                    <Label htmlFor="message" className="font-medium">Message *</Label>
                     <Textarea
                       id="message"
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder="Décrivez votre demande..."
-                      className="min-h-[120px]"
+                      className="min-h-[120px] focus:ring-2 focus:ring-blue-500"
                       required
                     />
                   </div>
 
-                  <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg">
-                    Envoyer le message
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg transition-colors disabled:opacity-70"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <span className="animate-pulse">Envoi en cours</span>
+                        <span className="ml-2">...</span>
+                      </>
+                    ) : (
+                      "Envoyer le message"
+                    )}
                   </Button>
                 </form>
               </div>
 
+              {/* Informations de contact */}
               <div className="bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl p-8 text-white">
                 <h2 className="text-2xl font-bold mb-6">Nos coordonnées</h2>
                 <div className="space-y-6">
@@ -144,7 +237,6 @@ export default function Contact() {
                       <a href="mailto:contact@yamo.app" className="hover:underline">contact@yamo.app</a>
                     </div>
                   </div>
-
                   <div className="flex items-start gap-4">
                     <div className="flex items-center justify-center h-12 w-12 rounded-xl bg-white/20">
                       <Phone className="h-6 w-6" />
@@ -155,7 +247,6 @@ export default function Contact() {
                       <p className="text-sm opacity-90">Lun-Ven, 9h-18h</p>
                     </div>
                   </div>
-
                   <div className="flex items-start gap-4">
                     <div className="flex items-center justify-center h-12 w-12 rounded-xl bg-white/20">
                       <MapPin className="h-6 w-6" />
@@ -166,7 +257,6 @@ export default function Contact() {
                       <p>75000 Paris, France</p>
                     </div>
                   </div>
-
                   <div className="flex items-start gap-4">
                     <div className="flex items-center justify-center h-12 w-12 rounded-xl bg-white/20">
                       <Clock className="h-6 w-6" />
