@@ -3,13 +3,11 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import StartFreeTrialModal from "@/components/modals/StartFreeTrialModal";
-import DemoModal from "@/components/modals/DemoModal";
-//import cover01 from "@/assets/hero/yamo-cover-01.jpg";
-//import cover02 from "@/assets/hero/yamo-cover-02.jpg";
 
   const heroImages = [
     "/assets/images/hero/yamo-cover-01.jpg",
-    "/assets/images/hero/yamo-cover-02.jpg"
+    "/assets/images/hero/yamo-cover-02.jpg",
+    "/assets/images/hero/yamo-cover-03.jpg",
   ];
 
 export default function Hero() {
