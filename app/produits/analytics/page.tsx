@@ -27,7 +27,7 @@ export default function Analytics() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 text-white mb-6 mx-auto"
+              className="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-gradient-to-br from-red-500 to-orange-500 text-white mb-6 mx-auto"
             >
               <BarChart className="h-8 w-8" />
             </motion.div>
@@ -36,7 +36,7 @@ export default function Analytics() {
               animate={{ opacity: 1, y: 0 }}
               className="text-4xl font-bold text-gray-900 sm:text-5xl mb-6"
             >
-              Analytics <span className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">Avancés</span>
+              Analytics <span className="bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">Avancés</span>
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -52,9 +52,9 @@ export default function Analytics() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
-              <Button size="lg" className="bg-purple-600 hover:bg-purple-700 text-white rounded-full shadow-lg">
-                Découvrir les Analytics
-              </Button>
+            <a href="/demo" className="cursor-pointer rounded-full font-medium bg-red-500 text-white px-4 py-2 hover:bg-red-600 transition">
+                Planifier une démo
+            </a>
             </motion.div>
           </div>
         </section>
@@ -73,7 +73,7 @@ export default function Analytics() {
                   transition={{ delay: index * 0.1 }}
                 >
                   <div className="p-6 rounded-xl hover:shadow-lg transition-shadow bg-white">
-                    <div className="flex items-center justify-center h-12 w-12 rounded-xl bg-purple-100 text-purple-600 mb-4">
+                    <div className="flex items-center justify-center h-12 w-12 rounded-xl text-orange-600 mb-4">
                       {feature.icon}
                     </div>
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
@@ -121,7 +121,7 @@ export default function Analytics() {
                 >
                   <div className="p-6 rounded-xl bg-gray-50 hover:shadow-md transition-shadow">
                     <div className="flex items-center gap-4">
-                      <div className="flex items-center justify-center h-12 w-12 rounded-xl bg-purple-100 text-purple-600">
+                      <div className="flex items-center justify-center h-12 w-12 rounded-xl bg-red-100 text-orange-600">
                         {useCase.icon}
                       </div>
                       <div>
@@ -137,13 +137,13 @@ export default function Analytics() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 bg-gradient-to-r from-purple-500 to-pink-500 text-white">
+        <section className="py-20 bg-gradient-to-r from-red-500 to-orange-500 text-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold mb-6">Prenez le contrôle de vos données</h2>
             <p className="text-xl mb-8">Transformez vos données en décisions stratégiques pour votre restaurant.</p>
-            <Button size="lg" className="bg-white text-purple-600 hover:bg-gray-100 font-medium px-8 py-3 rounded-full">
-              Demander une démo
-            </Button>
+            <a href="/demo" className="cursor-pointer rounded-full font-medium bg-white text-gray-900 px-4 py-2 hover:bg-primary-700 transition">
+                Planifier une démo
+            </a>
           </div>
         </section>
       </main>

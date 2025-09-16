@@ -45,7 +45,7 @@ export default function Documentation() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-500 text-white mb-6 mx-auto"
+              className="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-gradient-to-br from-orange-500 to-red-500 text-white mb-6 mx-auto"
             >
               <BookOpen className="h-8 w-8" />
             </motion.div>
@@ -54,7 +54,7 @@ export default function Documentation() {
               animate={{ opacity: 1, y: 0 }}
               className="text-4xl font-bold text-gray-900 sm:text-5xl mb-6"
             >
-              Documentation <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">Yamo</span>
+              Documentation <span className="bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">Yamo</span>
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -98,7 +98,7 @@ export default function Documentation() {
                   transition={{ delay: index * 0.1 }}
                 >
                   <div className="p-6 rounded-xl bg-white hover:shadow-lg transition-shadow h-full border border-gray-100">
-                    <div className="flex items-center justify-center h-12 w-12 rounded-xl bg-blue-100 text-blue-600 mb-4">
+                    <div className="flex items-center justify-center h-12 w-12 rounded-xl bg-red-100 text-red-600 mb-4">
                       {category.icon}
                     </div>
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">{category.title}</h3>
@@ -152,14 +152,11 @@ export default function Documentation() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 bg-gradient-to-r from-blue-500 to-purple-500 text-white">
+        <section className="py-20 bg-gradient-to-r from-orange-500 to-red-500 text-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold mb-6">Besoin d'aide supplémentaire ?</h2>
             <p className="text-xl mb-8">Notre équipe est disponible pour vous accompagner.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 font-medium px-8 py-3 rounded-full">
-                Contacter le support
-              </Button>
               <Button size="lg" variant="outline" className="text-orange-500 border-white hover:bg-white/10 font-medium px-8 py-3 rounded-full">
                 Parler à un expert
               </Button>

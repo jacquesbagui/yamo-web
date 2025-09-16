@@ -44,7 +44,7 @@ export default function Header({
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-3">
               <a href="/demo" className="cursor-pointer rounded-full font-bold border border-gray-300 bg-white text-black px-5 py-2 hover:bg-primary-700 transition">
-                Voir une démo
+                Planifier une démo
               </a>
           </div>
 

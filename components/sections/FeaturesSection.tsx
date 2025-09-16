@@ -5,13 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 const features = [
-  { title: "Click & Collect", subtitle: "Commandes en ligne à emporter", imageUrl: "https://sundayapp.com/app/uploads/2024/03/Click-Collect-Slider-card-LanguageUS@2x-1-min-1.png", link: "/features/click-and-collect" },
-  { title: "Précommande", subtitle: "Commandes de groupe à l'avance", imageUrl: "https://sundayapp.com/app/uploads/2024/03/Slider-card-LanguageUS@2x-3-min-1.png", link: "/features/pre-order" },
-  { title: "Pré-paiement", subtitle: "Acptes via un lien de paiement", imageUrl: "https://sundayapp.com/app/uploads/2024/03/Payment-link-Slider-card-LanguageUS@2x-min-1.png", link: "/features/pre-payment" },
-  { title: "QR Code Menus", subtitle: "Menus digitaux accessibles en un scan", imageUrl: "https://sundayapp.com/app/uploads/2024/03/Digital-tab-Slider-card-LanguageUS@2x-2-min-1.png", link: "/features/qr-code" },
-  { title: "Order & Pay", subtitle: "Commandez et payez depuis votre table", imageUrl: "https://sundayapp.com/app/uploads/2024/03/Slider-card-LanguageUS@2x-3-min-1.png", link: "/features/order-pay" },
-  { title: "Réservations", subtitle: "Gérez les réservations et listes d'attente", imageUrl: "https://sundayapp.com/app/uploads/2024/03/Slider-card-LanguageUS@2x-3-min-1.png", link: "/features/reservations" },
-  { title: "Livraison Intégrée", subtitle: "Connectez-vous à des plateformes de livraison", imageUrl: "https://sundayapp.com/app/uploads/2024/03/Payment-link-Slider-card-LanguageUS@2x-min-1.png", link: "/features/delivery" },
+  { title: "Click & Collect", subtitle: "Commandes en ligne à emporter", imageUrl: "/assets/images/features/feature-click.jpg", link: "/produits/click-collect" },
+  { title: "Précommande", subtitle: "Commandes de groupe à l'avance", imageUrl: "https://sundayapp.com/app/uploads/2024/03/Slider-card-LanguageUS@2x-3-min-1.png", link: "/produits/order-pay" },
+  { title: "QR Code Menus", subtitle: "Menus digitaux accessibles en un scan", imageUrl: "/assets/images/features/qr-code.jpg", link: "/produits/menu-digital" },
+  { title: "Order & Pay", subtitle: "Commandez et payez depuis votre table", imageUrl: "/assets/images/features/order-pay.jpg", link: "/produits/order-pay" },
+  { title: "Réservations", subtitle: "Gérez les réservations et listes d'attente", imageUrl: "https://sundayapp.com/app/uploads/2024/03/Slider-card-LanguageUS@2x-3-min-1.png", link: "/produits/reservations" },
+  { title: "Livraison Intégrée", subtitle: "Connectez-vous à des plateformes de livraison", imageUrl: "https://sundayapp.com/app/uploads/2024/03/Payment-link-Slider-card-LanguageUS@2x-min-1.png", link: "#" },
 ];
 
 export default function FeaturesCarousel() {

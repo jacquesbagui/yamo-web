@@ -8,10 +8,10 @@ import TopBar from "@/components/TopBar";
 import { Button } from "@/components/ui/button";
 
 const teamMembers = [
-  { name: "Jean Dupont", role: "Fondateur & CEO", image: "https://via.placeholder.com/150" },
-  { name: "Marie Martin", role: "Directrice Marketing", image: "https://via.placeholder.com/150" },
-  { name: "Pierre Lambert", role: "CTO", image: "https://via.placeholder.com/150" },
-];
+  { name: "Jean Jacques", role: "Fondateur & CEO", image: "https://avatar.iran.liara.run/public/37" },
+  { name: "Marie Martin", role: "Directrice Marketing", image: "https://avatar.iran.liara.run/public/99" },
+  { name: "Pierre Lambert", role: "CTO", image: "https://avatar.iran.liara.run/public/33" },
+];""
 
 const values = [
   {
@@ -71,14 +71,14 @@ export default function AboutUs() {
                   modernes, accessibles et conçus pour eux.
                 </p>
                 <p className="text-gray-600 mb-4">
-                  Aujourd'hui, nous accompagnons plus de 1 000 restaurants en France et en Europe,
+                  Aujourd'hui, nous accompagnons plus de 1 000 restaurants partout dans le monde,
                   des petits cafés aux établissements étoilés, dans leur transition digitale.
                 </p>
                 <div className="flex items-center gap-4 mt-6">
                   <Award className="h-10 w-10 text-yellow-500" />
                   <div>
                     <p className="font-semibold">+1000 restaurants partenaires</p>
-                    <p className="text-sm text-gray-500">En France et en Europe</p>
+                    <p className="text-sm text-gray-500">Dans le monde</p>
                   </div>
                 </div>
               </div>
@@ -87,7 +87,7 @@ export default function AboutUs() {
                   "Notre vision : un monde où chaque restaurant, quel que soit sa taille,
                   peut offrir une expérience client exceptionnelle grâce à la technologie."
                 </blockquote>
-                <p className="mt-6 font-medium">Jean Dupont, Fondateur</p>
+                <p className="mt-6 font-medium">Jean Jacques BAGUI, Fondateur</p>
               </div>
             </div>
           </div>

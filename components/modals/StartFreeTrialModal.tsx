@@ -125,7 +125,7 @@ export default function StartFreeTrialModal() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button size="lg" className="cursor-pointer bg-gradient-to-r font-bold from-orange-500 to-red-500 hover:opacity-90 text-white rounded-full shadow-lg">
-          Démarrer l'essai gratuit
+          Essayer Yamo gratuitement
           <ArrowRight className="ml-2 h-5 w-5" />
         </Button>
       </DialogTrigger>

@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import TopBar from "@/components/TopBar";
 import { Button } from "@/components/ui/button";
 import { Check, ChefHat, QrCode, Image as ImageIcon, AlertCircle, RefreshCw, Globe } from "lucide-react";
+import StartFreeTrialModal from "@/components/modals/StartFreeTrialModal";
 
 const features = [
   { icon: <QrCode className="h-6 w-6" />, title: "QR Codes personnalisés", description: "Un code unique par table avec suivi des consultations." },
@@ -50,9 +51,7 @@ export default function MenuDigital() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
-              <Button size="lg" className="bg-orange-600 hover:bg-orange-700 text-white rounded-full shadow-lg">
-                Essayer gratuitement
-              </Button>
+              <StartFreeTrialModal />
             </motion.div>
           </div>
         </section>
@@ -115,9 +114,7 @@ export default function MenuDigital() {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold mb-6">Prêt à digitaliser votre menu ?</h2>
             <p className="text-xl mb-8">Essayez gratuitement pendant 14 jours, sans engagement.</p>
-            <Button size="lg" className="bg-white text-orange-600 hover:bg-gray-100 font-medium px-8 py-3 rounded-full">
-              Commencer l'essai gratuit
-            </Button>
+            <StartFreeTrialModal />
           </div>
         </section>
       </main>

@@ -51,9 +51,6 @@ export default function Hero() {
               className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
             >
               <StartFreeTrialModal />
-              <a href="/demo" className="cursor-pointer rounded-full font-medium bg-primary text-white px-4 py-2 hover:bg-primary-700 transition">
-                Voir une démo
-              </a>
             </motion.div>
           </div>
           <div className="mt-12 lg:mt-0 relative">

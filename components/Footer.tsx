@@ -6,6 +6,9 @@ const footerLinks = {
   produit: [
     { name: "Menu Digital", href: "/produits/menu-digital" },
     { name: "Order & Pay", href: "/produits/order-pay" },
+    { name: "Click & Collect", href: "/produits/click-collect" },
+    { name: "Réservations", href: "/produits/reservations" },
+    { name: "Précommandes", href: "/produits/precommandes" },
     { name: "Analytics", href: "/produits/analytics" },
     { name: "Intégrations", href: "/produits/integrations" },
   ],

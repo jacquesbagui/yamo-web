@@ -29,10 +29,10 @@ export default function TopBar() {
 
           {/* Bouton - texte plus court sur mobile */}
           <a
-            href="#demo"
+            href="/demo"
             className="ml-1 sm:ml-2 underline underline-offset-2 hover:no-underline text-[11px] sm:text-sm font-medium whitespace-nowrap"
           >
-            Essayer →
+            Planifier une démo →
           </a>
         </div>
       </div>

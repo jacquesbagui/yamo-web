@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import Header from "@/components/Header";
-import Footer from "@/components/TopBar";
+import Footer from "@/components/Footer";
 import TopBar from "@/components/TopBar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -90,7 +90,7 @@ export default function Contact() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-500 text-white mb-6 mx-auto"
+              className="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-gradient-to-br from-orange-500 to-red-500 text-white mb-6 mx-auto"
             >
               <Mail className="h-8 w-8" />
             </motion.div>
@@ -99,7 +99,7 @@ export default function Contact() {
               animate={{ opacity: 1, y: 0 }}
               className="text-4xl font-bold text-gray-900 sm:text-5xl mb-6"
             >
-              Contactez <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">l'équipe Yamo</span>
+              Contactez <span className="bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">l'équipe Yamo</span>
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -210,7 +210,7 @@ export default function Contact() {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg transition-colors disabled:opacity-70"
+                    className="w-full bg-orange-600 hover:bg-orange-700 text-white py-3 text-lg transition-colors disabled:opacity-70"
                   >
                     {isSubmitting ? (
                       <>
@@ -225,7 +225,7 @@ export default function Contact() {
               </div>
 
               {/* Informations de contact */}
-              <div className="bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl p-8 text-white">
+              <div className="bg-gradient-to-br from-red-500 to-orange-500 rounded-xl p-8 text-white">
                 <h2 className="text-2xl font-bold mb-6">Nos coordonnées</h2>
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
@@ -234,17 +234,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">Email</h3>
-                      <a href="mailto:contact@yamo.app" className="hover:underline">contact@yamo.app</a>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="flex items-center justify-center h-12 w-12 rounded-xl bg-white/20">
-                      <Phone className="h-6 w-6" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-1">Téléphone</h3>
-                      <a href="tel:+33123456789" className="hover:underline">+33 1 23 45 67 89</a>
-                      <p className="text-sm opacity-90">Lun-Ven, 9h-18h</p>
+                      <a href="mailto:contact@yamo.app" className="hover:underline">hello@yamoapp.io</a>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
@@ -253,8 +243,8 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">Adresse</h3>
-                      <p>123 Rue de Paris</p>
-                      <p>75000 Paris, France</p>
+                      <p>Riviera, Cocody</p>
+                      <p>Abidjan, Côte d'Ivoire</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
