@@ -10,9 +10,15 @@ import {
   DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+  DropdownMenuCheckboxItem,
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowRight, MapPin, Users, ChefHat, CheckCircle, Mail, Phone, Clock } from "lucide-react";
+import { ArrowRight, MapPin, Users, ChefHat, CheckCircle, Mail, Phone, Clock, ChevronDown } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { RESTAURANT_TYPES } from "@/lib/constants/restaurant-types";
@@ -39,7 +45,7 @@ export default function StartFreeTrialModal() {
     restaurantName: "",
     restaurantType: "",
     covers: "",
-    currentSystem: "",
+    currentSystems: [] as string[],
   });
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -63,7 +69,7 @@ export default function StartFreeTrialModal() {
       restaurantName: "",
       restaurantType: "",
       covers: "",
-      currentSystem: "",
+      currentSystems: [],
     });
     setStep(1);
   };
@@ -88,7 +94,7 @@ export default function StartFreeTrialModal() {
             Essai gratuit demandé pour ${formData.restaurantName} (${formData.restaurantType}).
             Ville: ${formData.city}, ${country?.name}.
             Nombre de places: ${formData.covers}.
-            Système actuel: ${formData.currentSystem || "Aucun"}.
+            Systèmes actuels: ${formData.currentSystems.length > 0 ? formData.currentSystems.join(", ") : "Aucun"}.
           `,
           value: 0, // Essai gratuit
         }),
@@ -284,22 +290,50 @@ export default function StartFreeTrialModal() {
                     />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="currentSystem" className="font-medium">
-                      Système actuel
+                    <Label htmlFor="currentSystems" className="font-medium">
+                      Systèmes actuels
                     </Label>
-                    <select
-                      id="currentSystem"
-                      value={formData.currentSystem}
-                      onChange={(e) => setFormData({ ...formData, currentSystem: e.target.value })}
-                      className="border rounded-md p-2 bg-white"
-                    >
-                      <option value="">Sélectionnez</option>
-                      {CURRENT_SYSTEMS.map((system) => (
-                        <option key={system.value} value={system.value}>
-                          {system.label}
-                        </option>
-                      ))}
-                    </select>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className="w-full justify-between text-left font-normal"
+                        >
+                          {formData.currentSystems.length > 0 
+                            ? `${formData.currentSystems.length} système(s) sélectionné(s)`
+                            : "Sélectionnez vos systèmes"
+                          }
+                          <ChevronDown className="h-4 w-4 opacity-50" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-full min-w-[300px]" onCloseAutoFocus={(e) => e.preventDefault()}>
+                        {CURRENT_SYSTEMS.map((system) => (
+                          <DropdownMenuCheckboxItem
+                            key={system.value}
+                            checked={formData.currentSystems.includes(system.value)}
+                            onCheckedChange={(checked) => {
+                              if (checked) {
+                                setFormData({
+                                  ...formData,
+                                  currentSystems: [...formData.currentSystems, system.value]
+                                });
+                              } else {
+                                setFormData({
+                                  ...formData,
+                                  currentSystems: formData.currentSystems.filter(s => s !== system.value)
+                                });
+                              }
+                            }}
+                            onSelect={(e) => e.preventDefault()}
+                          >
+                            <div className="flex flex-col">
+                              <span className="font-medium">{system.label}</span>
+                              <span className="text-xs text-gray-500">{system.description}</span>
+                            </div>
+                          </DropdownMenuCheckboxItem>
+                        ))}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </div>
                 </div>
                 <div className="bg-blue-50 p-4 rounded-lg">
