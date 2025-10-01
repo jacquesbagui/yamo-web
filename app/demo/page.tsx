@@ -12,6 +12,8 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
+import { RESTAURANT_TYPES } from "@/lib/constants/restaurant-types";
+import { CURRENT_SYSTEMS } from "@/lib/constants/current-systems";
 
 export default function DemoRequest() {
   const [formData, setFormData] = useState({
@@ -30,15 +32,7 @@ export default function DemoRequest() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
 
-  const restaurantTypes = [
-    { value: "traditional", label: "Restaurant traditionnel" },
-    { value: "fast_food", label: "Fast food" },
-    { value: "cafe", label: "Café/restaurant" },
-    { value: "hotel", label: "Hôtel/restaurant" },
-    { value: "bar", label: "Bar/restaurant" },
-    { value: "food_truck", label: "Food truck" },
-    { value: "other", label: "Autre" }
-  ];
+  const restaurantTypes = RESTAURANT_TYPES;
 
   const employeeCounts = [
     { value: "1-5", label: "1-5 employés" },
@@ -47,12 +41,7 @@ export default function DemoRequest() {
     { value: "50+", label: "Plus de 50 employés" }
   ];
 
-  const currentSystems = [
-    { value: "none", label: "Aucun système" },
-    { value: "paper", label: "Menus papier" },
-    { value: "pos", label: "Caisse enregistreuse" },
-    { value: "other_software", label: "Autre logiciel" }
-  ];
+  const currentSystems = CURRENT_SYSTEMS;
 
   const timeSlots = [
     { value: "09:00", label: "09:00" },

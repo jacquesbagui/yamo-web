@@ -23,6 +23,8 @@ import {
   MessageSquare,
   Phone,
   Mail,
+  CheckCircle,
+  Clock,
 } from "lucide-react";
 import { toast } from "sonner"
 
@@ -61,6 +63,8 @@ export default function ContactSalesModal() {
     preferredContact: "email",
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -93,6 +97,8 @@ export default function ContactSalesModal() {
         toast("Merci !",{
           description: `Notre équipe Enterprise vous contactera pour discuter de votre projet.`,
         });
+        setOpen(false);
+        setShowSuccessModal(true);
       } else {
         throw new Error(data.error || "Échec de la création du lead.");
       }
@@ -115,7 +121,8 @@ export default function ContactSalesModal() {
   };
 
   return (
-    <Dialog>
+    <>
+      <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="cursor-pointer font-bold w-full font-medium bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white">
           <Crown className="w-4 h-4 mr-2" />
@@ -224,7 +231,7 @@ export default function ContactSalesModal() {
                 required
               />
             </div>
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="grid md:grid-cols-2 gap-12">
               <div className="grid gap-2">
                 <Label htmlFor="businessSize" className="font-medium">
                   Taille de l'organisation *
@@ -379,5 +386,69 @@ export default function ContactSalesModal() {
         </div>
       </DialogContent>
     </Dialog>
+
+    {/* Modal de succès */}
+    <Dialog open={showSuccessModal} onOpenChange={setShowSuccessModal}>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader className="text-center">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+            <CheckCircle className="h-8 w-8 text-green-600" />
+          </div>
+          <DialogTitle className="text-2xl font-bold text-gray-900">
+            Demande Enterprise envoyée !
+          </DialogTitle>
+          <DialogDescription className="text-gray-600 mt-2">
+            Votre demande de solution Enterprise a été transmise à notre équipe spécialisée.
+          </DialogDescription>
+        </DialogHeader>
+        
+        <div className="space-y-4 py-4">
+          <div className="bg-blue-50 p-4 rounded-lg">
+            <h4 className="font-semibold text-blue-900 mb-3 flex items-center gap-2">
+              <Clock className="h-5 w-5" />
+              Prochaines étapes
+            </h4>
+            <ul className="text-sm text-blue-800 space-y-2">
+              <li className="flex items-start gap-2">
+                <span className="text-blue-600 mt-0.5">•</span>
+                <span>Notre équipe Enterprise vous contactera dans les <strong>4 heures</strong></span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-blue-600 mt-0.5">•</span>
+                <span>Analyse personnalisée de vos besoins</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-blue-600 mt-0.5">•</span>
+                <span>Démo sur mesure avec votre équipe</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-blue-600 mt-0.5">•</span>
+                <span>Proposition tarifaire adaptée</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <h4 className="font-semibold text-gray-900 mb-2">Contact direct</h4>
+            <div className="space-y-2 text-sm text-gray-600">
+              <div className="flex items-center gap-2">
+                <Mail className="h-4 w-4" />
+                <span>hello@yamoapp.io</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <DialogFooter>
+          <Button 
+            onClick={() => setShowSuccessModal(false)} 
+            className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:opacity-90"
+          >
+            Parfait, j'ai compris
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+    </>
   );
 }

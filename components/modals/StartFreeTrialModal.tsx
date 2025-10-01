@@ -12,9 +12,11 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowRight, MapPin, Users, ChefHat } from "lucide-react";
+import { ArrowRight, MapPin, Users, ChefHat, CheckCircle, Mail, Phone, Clock } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { RESTAURANT_TYPES } from "@/lib/constants/restaurant-types";
+import { CURRENT_SYSTEMS } from "@/lib/constants/current-systems";
 
 const AFRICAN_COUNTRIES = [
   { code: "CI", name: "Côte d'Ivoire", flag: "🇨🇮", phoneCode: "225" },
@@ -26,15 +28,6 @@ const AFRICAN_COUNTRIES = [
   { code: "BJ", name: "Bénin", flag: "🇧🇯", phoneCode: "229" },
 ];
 
-const RESTAURANT_TYPES = [
-  { value: "restaurant_traditionnel", label: "Restaurant traditionnel" },
-  { value: "maquis", label: "Maquis" },
-  { value: "cafe_restaurant", label: "Café-restaurant" },
-  { value: "fast_food", label: "Fast-food" },
-  { value: "hotel_restaurant", label: "Hôtel-restaurant" },
-  { value: "bar_restaurant", label: "Bar-restaurant" },
-  { value: "autre", label: "Autre" },
-];
 
 export default function StartFreeTrialModal() {
   const [formData, setFormData] = useState({
@@ -51,6 +44,7 @@ export default function StartFreeTrialModal() {
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const router = useRouter();
 
   const formatPhoneNumber = (value: string) => {
@@ -104,10 +98,11 @@ export default function StartFreeTrialModal() {
 
       if (data.success) {
         toast.success("Succès !", {
-          description: `Votre essai gratuit de 14 jours est activé. Consultez votre email pour les détails de connexion.`,
+          description: `Votre demande d'essai gratuit a été envoyée. Notre équipe vous contactera dans les plus brefs délais.`,
         });
 
         setOpen(false);
+        setShowSuccessModal(true);
         resetForm();
       } else {
         throw new Error(data.error || "Échec de la création du lead.");
@@ -122,6 +117,7 @@ export default function StartFreeTrialModal() {
   };
 
   return (
+    <>
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button size="lg" className="cursor-pointer bg-gradient-to-r font-bold from-orange-500 to-red-500 hover:opacity-90 text-white rounded-full shadow-lg">
@@ -129,13 +125,13 @@ export default function StartFreeTrialModal() {
           <ArrowRight className="ml-2 h-5 w-5" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-gray-900 flex items-center gap-2">
             <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center">
               <ChefHat className="w-4 h-4 text-white" />
             </div>
-            Essai gratuit 14 jours
+            Essai gratuit
           </DialogTitle>
           <DialogDescription className="text-gray-600">
             <strong>100% gratuit</strong> • Aucune carte bancaire requise • Configuration en moins de 5 minutes • Support WhatsApp inclus
@@ -297,10 +293,12 @@ export default function StartFreeTrialModal() {
                       onChange={(e) => setFormData({ ...formData, currentSystem: e.target.value })}
                       className="border rounded-md p-2 bg-white"
                     >
-                      <option value="">Aucun</option>
-                      <option value="paper">Menus papier</option>
-                      <option value="pos">Caisse enregistreuse</option>
-                      <option value="other_software">Autre logiciel</option>
+                      <option value="">Sélectionnez</option>
+                      {CURRENT_SYSTEMS.map((system) => (
+                        <option key={system.value} value={system.value}>
+                          {system.label}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
@@ -331,5 +329,64 @@ export default function StartFreeTrialModal() {
         </div>
       </DialogContent>
     </Dialog>
+
+    <Dialog open={showSuccessModal} onOpenChange={setShowSuccessModal}>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader className="text-center">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+            <CheckCircle className="h-8 w-8 text-green-600" />
+          </div>
+          <DialogTitle className="text-2xl font-bold text-gray-900">
+            Demande envoyée avec succès !
+          </DialogTitle>
+          <DialogDescription className="text-gray-600 mt-2">
+            Votre demande d'essai gratuit a été transmise à notre équipe.
+          </DialogDescription>
+        </DialogHeader>
+        
+        <div className="space-y-4 py-4">
+          <div className="bg-blue-50 p-4 rounded-lg">
+            <h4 className="font-semibold text-blue-900 mb-3 flex items-center gap-2">
+              <Clock className="h-5 w-5" />
+              Prochaines étapes
+            </h4>
+            <ul className="text-sm text-blue-800 space-y-2">
+              <li className="flex items-start gap-2">
+                <span className="text-blue-600 mt-0.5">•</span>
+                <span>Notre équipe vous contactera dans les <strong>48 heures</strong></span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-blue-600 mt-0.5">•</span>
+                <span>Configuration de votre compte d'essai</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-blue-600 mt-0.5">•</span>
+                <span>Formation personnalisée incluse</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <h4 className="font-semibold text-gray-900 mb-2">Besoin d'aide immédiate ?</h4>
+            <div className="space-y-2 text-sm text-gray-600">
+              <div className="flex items-center gap-2">
+                <Mail className="h-4 w-4" />
+                <span>hello@yamoapp.io</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <DialogFooter className="flex-col gap-2">
+          <Button 
+            onClick={() => setShowSuccessModal(false)} 
+            className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:opacity-90"
+          >
+            Parfait, j'ai compris
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+    </>
   );
 }
